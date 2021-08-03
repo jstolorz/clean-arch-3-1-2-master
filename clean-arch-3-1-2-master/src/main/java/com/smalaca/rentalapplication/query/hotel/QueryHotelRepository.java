@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class QueryHotelRepository {
-    // spring
+    // spring test 2
     private final SpringJpaQueryHotelRepository repository;
 
     public QueryHotelRepository(SpringJpaQueryHotelRepository repository) {
