@@ -1,16 +1,10 @@
 package com.smalaca.rentalapplication.application.apartment;
 
-import com.smalaca.rentalapplication.domain.apartment.Apartment;
-import com.smalaca.rentalapplication.domain.apartment.ApartmentFactory;
-import com.smalaca.rentalapplication.domain.apartment.ApartmentRepository;
-import com.smalaca.rentalapplication.domain.apartment.Booking;
-import com.smalaca.rentalapplication.domain.apartment.BookingRepository;
-import com.smalaca.rentalapplication.domain.apartment.Period;
+import com.smalaca.rentalapplication.domain.apartment.*;
 import com.smalaca.rentalapplication.domain.eventchannel.EventChannel;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Map;
 
 @Service
 public class ApartmentApplicationService {
@@ -26,12 +20,11 @@ public class ApartmentApplicationService {
     }
 
 
-    public String add(
-            String ownerId, String street, String postalCode, String houseNumber, String apartmentNumber,
-            String city, String country, String description, Map<String, Double> roomsDefinition) {
-
+    public String add(final ApartmentDto apartmentDto) {
         Apartment apartment = new ApartmentFactory().create(
-                ownerId, street, postalCode, houseNumber, apartmentNumber, city, country, description, roomsDefinition);
+                apartmentDto.getOwnerId(), apartmentDto.getStreet(), apartmentDto.getPostalCode(), apartmentDto.getHouseNumber(),
+                apartmentDto.getApartmentNumber(), apartmentDto.getCity(), apartmentDto.getCountry(), apartmentDto.getDescription(),
+                apartmentDto.getRoomsDefinition());
 
         return apartmentRepository.save(apartment);
     }
