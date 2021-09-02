@@ -1,5 +1,6 @@
 package com.smalaca.rentalapplication.domain.apartment;
 
+import com.fasterxml.jackson.databind.PropertyMetadata;
 import com.smalaca.rentalapplication.domain.eventchannel.EventChannel;
 
 import javax.persistence.CollectionTable;
@@ -10,7 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import java.security.cert.CertPathBuilder;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Entity
@@ -54,5 +58,83 @@ public class Apartment {
         }
 
         return id.toString();
+    }
+
+    public static class Builder {
+
+        private String ownerId;
+        private String postalCode;
+        private String houseNumber;
+        private String apartmentNumber;
+        private String city;
+        private String country;
+        private String description;
+        private Map<String, Double> roomsDefinition;
+        private String street;
+
+        private Builder(){}
+
+        public static Builder apartment() {
+            return new Builder();
+        }
+
+        public Builder withOwnerId(final String ownerId) {
+            this.ownerId = ownerId;
+            return this;
+        }
+
+        public Builder withPostalCode(final String postalCode) {
+            this.postalCode = postalCode;
+            return this;
+        }
+
+        public Builder withHouseNumber(final String houseNumber) {
+            this.houseNumber = houseNumber;
+            return this;
+        }
+
+        public Builder withApartmentNumber(final String apartmentNumber) {
+            this.apartmentNumber = apartmentNumber;
+            return this;
+        }
+
+        public Builder withCity(final String city) {
+            this.city = city;
+            return this;
+        }
+
+        public Builder withCountry(final String country) {
+            this.country = country;
+            return this;
+        }
+
+        public Builder withDescription(final String description) {
+            this.description = description;
+            return this;
+        }
+
+
+        public Builder withRoomsDefinition(final Map<String, Double> roomsDefinition) {
+            this.roomsDefinition = roomsDefinition;
+            return this;
+        }
+
+        public Builder withStreet(final String street) {
+            this.street = street;
+            return this;
+        }
+
+        public Apartment build() {
+            Address address = new Address(street, postalCode, houseNumber, apartmentNumber, city, country);
+            List<Room> rooms = new ArrayList<>();
+            roomsDefinition.forEach((name, size) -> {
+                SquareMeter squareMeter = new SquareMeter(size);
+                rooms.add(new Room(name, squareMeter));
+            });
+
+            return new Apartment(ownerId, address, rooms, description);
+        }
+
+
     }
 }
