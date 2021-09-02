@@ -1,5 +1,6 @@
 package com.smalaca.rentalapplication.infrastructure.persistence.jpa.hotel;
 
+import com.smalaca.rentalapplication.domain.hotel.Address;
 import com.smalaca.rentalapplication.domain.hotel.Hotel;
 import com.smalaca.rentalapplication.domain.hotel.HotelFactory;
 import com.smalaca.rentalapplication.domain.hotel.HotelRepository;
@@ -33,7 +34,9 @@ class JpaHotelRepositoryIntegrationTest {
 
     @Test
     void shouldSaveHotel() {
-        Hotel hotel = new HotelFactory().create(NAME, STREET, POSTAL_CODE, BUILDING_NUMBER, CITY, COUNTRY);
+        new HotelFactory();
+        Address address = new Address(STREET, POSTAL_CODE, BUILDING_NUMBER, CITY, COUNTRY);
+        Hotel hotel = new Hotel(NAME, address);
 
         hotelId = hotelRepository.save(hotel);
 

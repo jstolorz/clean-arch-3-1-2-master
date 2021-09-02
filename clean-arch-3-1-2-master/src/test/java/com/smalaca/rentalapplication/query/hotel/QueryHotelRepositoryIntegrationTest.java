@@ -1,5 +1,6 @@
 package com.smalaca.rentalapplication.query.hotel;
 
+import com.smalaca.rentalapplication.domain.hotel.Address;
 import com.smalaca.rentalapplication.domain.hotel.Hotel;
 import com.smalaca.rentalapplication.domain.hotel.HotelFactory;
 import com.smalaca.rentalapplication.domain.hotel.HotelRepository;
@@ -42,9 +43,11 @@ class QueryHotelRepositoryIntegrationTest {
 
     @Test
     void shouldFindAllHotels() {
-        Hotel hotel1 = hotelFactory.create(NAME_1, STREET_1, POSTAL_CODE_1, BUILDING_NUMBER_1, CITY_1, COUNTRY_1);
+        Address address1 = new Address(STREET_1, POSTAL_CODE_1, BUILDING_NUMBER_1, CITY_1, COUNTRY_1);
+        Hotel hotel1 = new Hotel(NAME_1, address1);
         hotelId1 = hotelRepository.save(hotel1);
-        Hotel hotel2 = hotelFactory.create(NAME_2, STREET_2, POSTAL_CODE_2, BUILDING_NUMBER_2, CITY_2, COUNTRY_2);
+        Address address = new Address(STREET_2, POSTAL_CODE_2, BUILDING_NUMBER_2, CITY_2, COUNTRY_2);
+        Hotel hotel2 = new Hotel(NAME_2, address);
         hotelId2 = hotelRepository.save(hotel2);
 
         Iterable<HotelReadModel> actual = queryHotelRepository.findAll();
