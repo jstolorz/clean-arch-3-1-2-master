@@ -1,7 +1,6 @@
 package com.smalaca.rentalapplication.application.hotel;
 
 import com.smalaca.rentalapplication.domain.hotel.Hotel;
-import com.smalaca.rentalapplication.domain.hotel.HotelFactory;
 import com.smalaca.rentalapplication.domain.hotel.HotelRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +12,17 @@ public class HotelApplicationService {
         this.hotelRepository = hotelRepository;
     }
 
-    @SuppressWarnings("checkstyle:ParameterNumber")
-    public void add(String name, String street, String postalCode, String buildingNumber, String city, String country) {
-        Hotel hotel = new HotelFactory().create(name, street, postalCode, buildingNumber, city, country);
+    public void add(HotelDto hotelDto) {
+
+        Hotel hotel = Hotel.Builder.hotel()
+                        .widthName(hotelDto.getName())
+                        .widthStreet(hotelDto.getStreet())
+                        .widthPostalCode(hotelDto.getPostalCode())
+                        .widthBuildingNumber(hotelDto.getBuildingNumber())
+                        .widthCity(hotelDto.getCity())
+                        .widthCountry(hotelDto.getCountry())
+                        .build();
+
 
         hotelRepository.save(hotel);
     }

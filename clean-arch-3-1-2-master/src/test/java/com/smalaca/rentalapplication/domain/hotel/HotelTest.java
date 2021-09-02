@@ -14,7 +14,16 @@ class HotelTest {
 
     @Test
     void shouldCreateHotelWithAllInformation() {
-        Hotel actual = new HotelFactory().create(NAME, STREET, POSTAL_CODE, BUILDING_NUMBER, CITY, COUNTRY);
+
+
+        Hotel actual = Hotel.Builder.hotel()
+                .widthName(NAME)
+                .widthStreet(STREET)
+                .widthPostalCode(POSTAL_CODE)
+                .widthBuildingNumber(BUILDING_NUMBER)
+                .widthCity(CITY)
+                .widthCountry(COUNTRY)
+                .build();
 
         assertThat(actual)
                 .hasNameEqualsTo(NAME)
